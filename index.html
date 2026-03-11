@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הפתעה למיקה</title>
+
+<style>
+
+body {
+  margin:0;
+  font-family:Arial, sans-serif;
+  background: linear-gradient(135deg,#fff1f2,#ffe4e6,#fff7ed);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#1f2937;
+}
+
+.container {
+  width:90%;
+  max-width:900px;
+  background:rgba(255,255,255,0.95);
+  border-radius:24px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.12);
+  padding:32px;
+  text-align:center;
+}
+
+h1 {
+  font-size:2.2rem;
+  margin-bottom:10px;
+  color:#be185d;
+}
+
+p {
+  font-size:1.1rem;
+  line-height:1.7;
+}
+
+.main-photo {
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:28px;
+}
+
+.card {
+  background:white;
+  border:1px solid #fbcfe8;
+  border-radius:20px;
+  padding:24px 18px;
+  cursor:pointer;
+  transition:.25s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 16px 30px rgba(190,24,93,0.12);
+}
+
+.emoji {
+  font-size:2.4rem;
+  margin-bottom:10px;
+}
+
+.hidden {
+  display:none;
+}
+
+.reveal-box {
+  background:#fff1f2;
+  border-radius:20px;
+  padding:24px;
+  margin:24px 0;
+}
+
+.mini-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-top:24px;
+}
+
+.mini-card {
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.05);
+}
+
+.btn {
+  margin-top:24px;
+  background:#e11d48;
+  color:white;
+  border:none;
+  border-radius:14px;
+  padding:14px 22px;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.btn:hover {
+  background:#be123c;
+}
+
+@media(max-width:600px){
+.container{padding:22px}
+h1{font-size:1.8rem}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- מסך בחירה -->
+<div id="choiceScreen">
+
+<img src="mika.jpg" class="main-photo">
+
+<h1>מיקה, מה הכי היית רוצה לשבת הקרובה?</h1>
+
+<p>מגיע לך פינוק אמיתי אז תבחרי מה הכי עושה לך טוב ❤️</p>
+
+<div class="cards">
+
+<div class="card" onclick="revealGift('ארוחת דגים')">
+<div class="emoji">🐟</div>
+<h2>ארוחת דגים</h2>
+<p>נכין יחד ארוחה מושקעת עם דגים, סביצ׳ה וסלט טוב</p>
+</div>
+
+<div class="card" onclick="revealGift('ערב קולנוע')">
+<div class="emoji">🎬</div>
+<h2>ערב קולנוע</h2>
+<p>סרט ביתי מפנק עם שמיכות, נשנושים ואווירה</p>
+</div>
+
+<div class="card" onclick="revealGift('מסאז׳ מפנק')">
+<div class="emoji">💆</div>
+<h2>מסאז׳ מפנק</h2>
+<p>ערב רגוע שבו אני מפנק אותך כמו שמגיע לך</p>
+</div>
+
+</div>
+</div>
+
+<!-- מסך הפתעה -->
+<div id="revealScreen" class="hidden">
+
+<h1>הפתעה קטנה ✨</h1>
+
+<p id="chosenText"></p>
+
+<div class="reveal-box">
+<p style="font-size:1.4rem;font-weight:bold;margin:0">
+אבל האמת היא שמגיע לך הרבה יותר
+</p>
+
+<p style="font-size:1.7rem;font-weight:bold;color:#e11d48;margin-top:12px">
+בשבת הקרובה את מקבלת את כל שלושת הדברים
+</p>
+</div>
+
+<div class="mini-grid">
+
+<div class="mini-card">
+<div class="emoji">🐟</div>
+<strong>ארוחת דגים</strong>
+<p>אני דואג להכל</p>
+</div>
+
+<div class="mini-card">
+<div class="emoji">🎬</div>
+<strong>ערב קולנוע</strong>
+<p>שמיכות, נשנושים ואווירה</p>
+</div>
+
+<div class="mini-card">
+<div class="emoji">💆</div>
+<strong>מסאז׳ מפנק</strong>
+<p>צ'יל ופינוקים עם מסאז׳יסט מקצועי שמכיר אותך טוב</p>
+</div>
+
+</div>
+
+<p style="margin-top:28px">
+מיקה שלי,<br>
+תודה שאת מושלמת.<br>
+אני אוהב אותך ❤️
+</p>
+
+<button class="btn" onclick="goBack()">לבחור שוב</button>
+
+</div>
+</div>
+
+<script>
+
+function revealGift(choice){
+document.getElementById("choiceScreen").classList.add("hidden");
+document.getElementById("revealScreen").classList.remove("hidden");
+document.getElementById("chosenText").innerHTML =
+"נכון שבחרת <b style='color:#e11d48'>" + choice + "</b>...";
+}
+
+function goBack(){
+document.getElementById("revealScreen").classList.add("hidden");
+document.getElementById("choiceScreen").classList.remove("hidden");
+}
+
+</script>
+
+</body>
+</html>
