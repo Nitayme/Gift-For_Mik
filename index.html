@@ -1,230 +1,447 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הפתעה למיקה</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הפתעה למיקה</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin:0;
-  font-family:Arial, sans-serif;
-  background: linear-gradient(135deg,#fff1f2,#ffe4e6,#fff7ed);
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#1f2937;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f2, #ffe4e6, #fff7ed);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      overflow-x: hidden;
+    }
 
-.container {
-  width:90%;
-  max-width:900px;
-  background:rgba(255,255,255,0.95);
-  border-radius:24px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.12);
-  padding:32px;
-  text-align:center;
-}
+    .container {
+      width: 92%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      padding: 32px;
+      text-align: center;
+      position: relative;
+    }
 
-h1 {
-  font-size:2.2rem;
-  margin-bottom:10px;
-  color:#be185d;
-}
+    h1 {
+      font-size: 2.2rem;
+      margin: 12px 0 10px;
+      color: #be185d;
+    }
 
-p {
-  font-size:1.1rem;
-  line-height:1.7;
-}
+    p {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      margin: 0;
+    }
 
-.main-photo {
-  width:180px;
-  height:180px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:14px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-}
+    .top-emoji {
+      font-size: 3rem;
+      margin-bottom: 8px;
+    }
 
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;
-  margin-top:28px;
-}
+    .main-photo {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 8px auto 16px;
+      display: block;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border: 5px solid white;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
 
-.card {
-  background:white;
-  border:1px solid #fbcfe8;
-  border-radius:20px;
-  padding:24px 18px;
-  cursor:pointer;
-  transition:.25s ease;
-  box-shadow:0 8px 20px rgba(0,0,0,0.05);
-}
+    .main-photo:hover {
+      transform: scale(1.03);
+    }
 
-.card:hover {
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 16px 30px rgba(190,24,93,0.12);
-}
+    .subtitle {
+      color: #4b5563;
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
-.emoji {
-  font-size:2.4rem;
-  margin-bottom:10px;
-}
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
 
-.hidden {
-  display:none;
-}
+    .card {
+      background: white;
+      border: 1px solid #fbcfe8;
+      border-radius: 22px;
+      padding: 24px 18px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
 
-.reveal-box {
-  background:#fff1f2;
-  border-radius:20px;
-  padding:24px;
-  margin:24px 0;
-}
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 30px rgba(190, 24, 93, 0.12);
+    }
 
-.mini-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:14px;
-  margin-top:24px;
-}
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
 
-.mini-card {
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.05);
-}
+    .card h2 {
+      margin: 8px 0;
+      font-size: 1.3rem;
+      color: #111827;
+    }
 
-.btn {
-  margin-top:24px;
-  background:#e11d48;
-  color:white;
-  border:none;
-  border-radius:14px;
-  padding:14px 22px;
-  font-size:1rem;
-  cursor:pointer;
-}
+    .card p {
+      font-size: 0.98rem;
+      color: #4b5563;
+    }
 
-.btn:hover {
-  background:#be123c;
-}
+    .hidden {
+      display: none;
+    }
 
-@media(max-width:600px){
-.container{padding:22px}
-h1{font-size:1.8rem}
-}
+    .reveal-box {
+      background: #fff1f2;
+      border-radius: 22px;
+      padding: 24px;
+      margin: 24px 0;
+      animation: pop 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(225, 29, 72, 0.08);
+    }
 
-</style>
+    .big-line {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .highlight-line {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #e11d48;
+      margin-top: 12px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+      text-align: right;
+    }
+
+    .mini-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+    }
+
+    .countdown {
+      margin-top: 18px;
+      font-weight: bold;
+      color: #9f1239;
+      font-size: 1.05rem;
+    }
+
+    .love-box {
+      margin-top: 28px;
+      min-height: 85px;
+      background: #fffafc;
+      border: 1px solid #fbcfe8;
+      border-radius: 18px;
+      padding: 18px;
+      line-height: 1.9;
+      font-size: 1.08rem;
+      color: #374151;
+    }
+
+    .btn {
+      margin-top: 24px;
+      background: #e11d48;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #be123c;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -20px;
+      pointer-events: none;
+      animation: floatUp 2.2s linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.75);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .main-photo {
+        width: 160px;
+        height: 160px;
+      }
+
+      .big-line {
+        font-size: 1.2rem;
+      }
+
+      .highlight-line {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div id="choiceScreen">
+      <div class="top-emoji">💖</div>
 
-<div class="container">
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
 
-<!-- מסך בחירה -->
-<div id="choiceScreen">
+      <h1>מיקה, מה הכי היית רוצה לשבת הקרובה?</h1>
+      <p class="subtitle">
+        מגיע לך פינוק ברמות אז רק תבחרי מה הכי בא לך ❤️
+      </p>
 
-<img src="mika.jpeg" class="main-photo">
+      <div class="cards">
+        <div class="card" onclick="revealGift('ארוחת דגים')">
+          <div class="emoji">🐟</div>
+          <h2>ארוחת דגים</h2>
+          <p>נכין יחד ארוחה מושקעת עם דגים, סביצ׳ה וסלט טוב</p>
+        </div>
 
-<h1>מיקה, מה הכי היית רוצה לשבת הקרובה?</h1>
+        <div class="card" onclick="revealGift('ערב קולנוע')">
+          <div class="emoji">🎬</div>
+          <h2>ערב קולנוע</h2>
+          <p>סרט ביתי מפנק עם שמיכות, נשנושים ואווירה</p>
+        </div>
 
-<p>מגיע לך פינוק אמיתי אז תבחרי מה הכי עושה לך טוב ❤️</p>
+        <div class="card" onclick="revealGift('מסאז׳ מפנק')">
+          <div class="emoji">💆</div>
+          <h2>מסאז׳ מפנק</h2>
+          <p>ערב רגוע שבו אני מפנק אותך כמו שמגיע לך</p>
+        </div>
+      </div>
+    </div>
 
-<div class="cards">
+    <div id="revealScreen" class="hidden">
+      <div class="top-emoji">✨</div>
 
-<div class="card" onclick="revealGift('ארוחת דגים')">
-<div class="emoji">🐟</div>
-<h2>ארוחת דגים</h2>
-<p>נכין יחד ארוחה מושקעת עם דגים, סביצ׳ה וסלט טוב</p>
-</div>
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
 
-<div class="card" onclick="revealGift('ערב קולנוע')">
-<div class="emoji">🎬</div>
-<h2>ערב קולנוע</h2>
-<p>סרט ביתי מפנק עם שמיכות, נשנושים ואווירה</p>
-</div>
+      <h1>הפתעה קטנה</h1>
+      <p id="chosenText"></p>
 
-<div class="card" onclick="revealGift('מסאז׳ מפנק')">
-<div class="emoji">💆</div>
-<h2>מסאז׳ מפנק</h2>
-<p>ערב רגוע שבו אני מפנק אותך כמו שמגיע לך</p>
-</div>
+      <div class="reveal-box">
+        <p class="big-line">אבל האמת היא שמגיע לך הרבה יותר</p>
+        <p class="highlight-line">בשבת הקרובה את מקבלת את כל שלושת הדברים</p>
+      </div>
 
-</div>
-</div>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <div class="emoji">🐟</div>
+          <strong>ארוחת דגים</strong>
+          <p>אני דואג להכל ונבשל יחד</p>
+        </div>
 
-<!-- מסך הפתעה -->
-<div id="revealScreen" class="hidden">
+        <div class="mini-card">
+          <div class="emoji">🎬</div>
+          <strong>ערב קולנוע</strong>
+          <p>שמיכות, נשנושים ואווירה</p>
+        </div>
 
-<h1>הפתעה קטנה ✨</h1>
+        <div class="mini-card">
+          <div class="emoji">💆</div>
+          <strong>מסאז׳ מפנק</strong>
+          <p>צ'יל ופינוקים עם מסאז׳יסט מקצועי שמכיר אותך טוב</p>
+        </div>
+      </div>
 
-<p id="chosenText"></p>
+      <div id="countdown" class="countdown"></div>
 
-<div class="reveal-box">
-<p style="font-size:1.4rem;font-weight:bold;margin:0">
-אבל האמת היא שמגיע לך הרבה יותר
-</p>
+      <div id="loveText" class="love-box"></div>
 
-<p style="font-size:1.7rem;font-weight:bold;color:#e11d48;margin-top:12px">
-בשבת הקרובה את מקבלת את כל שלושת הדברים
-</p>
-</div>
+      <button class="btn" onclick="goBack()">לבחור שוב</button>
+    </div>
+  </div>
 
-<div class="mini-grid">
+  <script>
+    let typingStarted = false;
+    const loveMessage =
+      "מיקה שלי,<br>תודה שאת מושלמת.<br>אני אוהב אותך ❤️";
 
-<div class="mini-card">
-<div class="emoji">🐟</div>
-<strong>ארוחת דגים</strong>
-<p>אני דואג להכל</p>
-</div>
+    function revealGift(choice) {
+      document.getElementById("choiceScreen").classList.add("hidden");
+      document.getElementById("revealScreen").classList.remove("hidden");
+      document.getElementById("chosenText").innerHTML =
+        "נכון שבחרת <b style='color:#e11d48'>" + choice + "</b>...";
 
-<div class="mini-card">
-<div class="emoji">🎬</div>
-<strong>ערב קולנוע</strong>
-<p>שמיכות, נשנושים ואווירה</p>
-</div>
+      hearts();
 
-<div class="mini-card">
-<div class="emoji">💆</div>
-<strong>מסאז׳ מפנק</strong>
-<p>צ'יל ופינוקים עם מסאז׳יסט מקצועי שמכיר אותך טוב</p>
-</div>
+      if (!typingStarted) {
+        typingStarted = true;
+        typeText();
+      }
+    }
 
-</div>
+    function goBack() {
+      document.getElementById("revealScreen").classList.add("hidden");
+      document.getElementById("choiceScreen").classList.remove("hidden");
+    }
 
-<p style="margin-top:28px">
-מיקה שלי,<br>
-תודה שאת מושלמת.<br>
-אני אוהב אותך ❤️
-</p>
+    function hearts() {
+      for (let i = 0; i < 22; i++) {
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.innerHTML = Math.random() > 0.5 ? "💖" : "✨";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = 18 + Math.random() * 18 + "px";
+        heart.style.animationDuration = 1.8 + Math.random() * 1.6 + "s";
+        document.body.appendChild(heart);
 
-<button class="btn" onclick="goBack()">לבחור שוב</button>
+        setTimeout(() => {
+          heart.remove();
+        }, 3500);
+      }
+    }
 
-</div>
-</div>
+    function typeText() {
+      const element = document.getElementById("loveText");
+      let i = 0;
+      const temp = document.createElement("div");
+      temp.innerHTML = loveMessage;
+      const plainText = temp.innerText;
 
-<script>
+      function step() {
+        if (i <= plainText.length) {
+          const current = plainText.slice(0, i).replace(/\n/g, "<br>");
+          element.innerHTML = current;
+          i++;
+          setTimeout(step, 35);
+        } else {
+          element.innerHTML = loveMessage;
+        }
+      }
 
-function revealGift(choice){
-document.getElementById("choiceScreen").classList.add("hidden");
-document.getElementById("revealScreen").classList.remove("hidden");
-document.getElementById("chosenText").innerHTML =
-"נכון שבחרת <b style='color:#e11d48'>" + choice + "</b>...";
-}
+      step();
+    }
 
-function goBack(){
-document.getElementById("revealScreen").classList.add("hidden");
-document.getElementById("choiceScreen").classList.remove("hidden");
-}
+    function showSecretMessage() {
+      alert("את הדבר הכי טוב שקרה לי ❤️");
+    }
 
-</script>
+    function getNextSaturdayAt1900() {
+      const now = new Date();
+      const target = new Date(now);
+      const day = now.getDay();
+      let daysUntilSaturday = (6 - day + 7) % 7;
 
+      if (daysUntilSaturday === 0 && now.getHours() >= 19) {
+        daysUntilSaturday = 7;
+      }
+
+      target.setDate(now.getDate() + daysUntilSaturday);
+      target.setHours(19, 0, 0, 0);
+      return target;
+    }
+
+    function updateCountdown() {
+      const target = getNextSaturdayAt1900();
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "זה כבר היום ❤️";
+        return;
+      }
+
+      const totalMinutes = Math.floor(diff / (1000 * 60));
+      const days = Math.floor(totalMinutes / (60 * 24));
+      const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+      const minutes = totalMinutes % 60;
+
+      let text = "עד שבת שלנו: ";
+      if (days > 0) {
+        text += days + " ימים, ";
+      }
+      text += hours + " שעות ו-" + minutes + " דקות ❤️";
+
+      document.getElementById("countdown").innerHTML = text;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 30);
+  </script>
 </body>
 </html>
