@@ -1,204 +1,799 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הפתעה למיקה</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הפתעה למיקה</title>
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#fff1f2,#ffe4e6,#fff7ed);
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-.container{
-width:92%;
-max-width:900px;
-background:white;
-border-radius:24px;
-padding:30px;
-text-align:center;
-box-shadow:0 20px 40px rgba(0,0,0,.12);
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f2, #ffe4e6, #fff7ed);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2937;
+      overflow-x: hidden;
+      padding: 16px;
+    }
 
-h1{color:#be185d}
-.hidden{display:none}
+    .container {
+      width: 92%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      padding: 32px;
+      text-align: center;
+      position: relative;
+    }
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
+    h1 {
+      font-size: 2.2rem;
+      margin: 12px 0 10px;
+      color: #be185d;
+    }
 
-.card{
-border:1px solid #fbcfe8;
-border-radius:20px;
-padding:20px;
-cursor:pointer;
-transition:.25s;
-}
+    h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #111827;
+    }
 
-.card:hover{transform:scale(1.03)}
+    p {
+      font-size: 1.08rem;
+      line-height: 1.7;
+      margin: 0;
+    }
 
-button{
-margin-top:20px;
-padding:12px 20px;
-border:none;
-border-radius:12px;
-background:#e11d48;
-color:white;
-cursor:pointer;
-}
+    .top-emoji {
+      font-size: 3rem;
+      margin-bottom: 8px;
+    }
 
-button:hover{background:#be123c}
-</style>
+    .main-photo {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 8px auto 16px;
+      display: block;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border: 5px solid white;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .main-photo:hover {
+      transform: scale(1.03);
+    }
+
+    .subtitle {
+      color: #4b5563;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #fbcfe8;
+      border-radius: 22px;
+      padding: 24px 18px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 30px rgba(190, 24, 93, 0.12);
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.98rem;
+      color: #4b5563;
+      margin-top: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .reveal-box {
+      background: #fff1f2;
+      border-radius: 22px;
+      padding: 24px;
+      margin: 24px 0;
+      animation: pop 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(225, 29, 72, 0.08);
+    }
+
+    .big-line {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .highlight-line {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #e11d48;
+      margin-top: 12px;
+    }
+
+    .countdown {
+      margin-top: 18px;
+      font-weight: bold;
+      color: #9f1239;
+      font-size: 1.05rem;
+    }
+
+    .love-box {
+      margin-top: 28px;
+      min-height: 85px;
+      background: #fffafc;
+      border: 1px solid #fbcfe8;
+      border-radius: 18px;
+      padding: 18px;
+      line-height: 1.9;
+      font-size: 1.08rem;
+      color: #374151;
+    }
+
+    .btn,
+    .secondary-btn {
+      margin-top: 24px;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn {
+      background: #e11d48;
+      color: white;
+    }
+
+    .btn:hover {
+      background: #be123c;
+    }
+
+    .secondary-btn {
+      background: #fce7f3;
+      color: #9d174d;
+      margin-inline-start: 10px;
+    }
+
+    .secondary-btn:hover {
+      background: #fbcfe8;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -20px;
+      pointer-events: none;
+      animation: floatUp 2.2s linear forwards;
+      z-index: 9999;
+    }
+
+    .selection-summary {
+      margin-top: 24px;
+      display: grid;
+      gap: 12px;
+      text-align: right;
+    }
+
+    .selection-item {
+      background: #fffafc;
+      border: 1px solid #fbcfe8;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .selection-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #9d174d;
+      font-size: 1.05rem;
+    }
+
+    .back-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .choice-pill {
+      display: block;
+      width: 100%;
+      background: white;
+      border: 1px solid #fbcfe8;
+      border-radius: 18px;
+      padding: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 1rem;
+      color: #374151;
+    }
+
+    .choice-pill:hover,
+    .choice-pill.selected {
+      border-color: #ec4899;
+      background: #fff1f2;
+      transform: translateY(-2px);
+    }
+
+    .section-label {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #9d174d;
+      font-size: 1.05rem;
+      text-align: right;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.75);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .main-photo {
+        width: 160px;
+        height: 160px;
+      }
+
+      .big-line {
+        font-size: 1.2rem;
+      }
+
+      .highlight-line {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <!-- מסך ראשון -->
+    <div id="startScreen">
+      <div class="top-emoji">💖</div>
 
-<div class="container">
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
 
-<!-- מסך ראשון -->
-<div id="startScreen">
-<h1>מיקה, מה הכי היית רוצה לשבת הקרובה?</h1>
+      <h1>מיקה, מה הכי היית רוצה לשבת הקרובה?</h1>
+      <p class="subtitle">
+        מגיע לך פינוק ברמות אז רק תבחרי מה הכי בא לך ❤️
+      </p>
 
-<div class="cards">
+      <div class="cards">
+        <div class="card" onclick="openGiftSetup('fish')">
+          <div class="emoji">🐟</div>
+          <h2>ארוחת דגים</h2>
+          <p>נכין יחד ארוחה מושקעת עם דגים, סביצ׳ה וסלט טוב</p>
+        </div>
 
-<div class="card" onclick="openFish()">🐟<br>ארוחת דגים</div>
-<div class="card" onclick="openMovie()">🎬<br>ערב קולנוע</div>
-<div class="card" onclick="openMassage()">💆<br>מסאז׳</div>
+        <div class="card" onclick="openGiftSetup('movie')">
+          <div class="emoji">🎬</div>
+          <h2>ערב קולנוע</h2>
+          <p>סרט ביתי מפנק עם שמיכות, נשנושים ואווירה</p>
+        </div>
 
-</div>
-</div>
+        <div class="card" onclick="openGiftSetup('massage')">
+          <div class="emoji">💆</div>
+          <h2>מסאז׳ מפנק</h2>
+          <p>ערב רגוע שבו אני מפנק אותך כמו שמגיע לך</p>
+        </div>
+      </div>
+    </div>
 
-<!-- דגים -->
-<div id="fishScreen" class="hidden">
-<h1>ידעתי שתבחרי בדגים 😌</h1>
+    <!-- עמוד בחירת דגים -->
+    <div id="fishScreen" class="hidden">
+      <div class="top-emoji">🐟</div>
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
+      <h1>ידעתי שתבחרי בדגים 😌</h1>
+      <p class="subtitle">
+        כי ברור שתלכי על משהו טעים וקלאסי.
+      </p>
 
-<p>איזה דג בא לך?</p>
-<select id="fishType">
-<option>סלמון</option>
-<option>לברק</option>
-<option>דניס</option>
-</select>
+      <div class="section-label">איזה דג בא לך?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="fish-salmon" onclick="selectOption('fishType', 'סלמון', 'fish-salmon')">סלמון</button>
+        <button class="choice-pill" id="fish-seabass" onclick="selectOption('fishType', 'לברק', 'fish-seabass')">לברק</button>
+        <button class="choice-pill" id="fish-bream" onclick="selectOption('fishType', 'דניס', 'fish-bream')">דניס</button>
+      </div>
 
-<p>יין?</p>
-<select id="wineType">
-<option>אדום</option>
-<option>לבן</option>
-</select>
+      <div class="section-label">ואיזה יין?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="wine-red" onclick="selectOption('wineType', 'יין אדום', 'wine-red')">יין אדום</button>
+        <button class="choice-pill" id="wine-white" onclick="selectOption('wineType', 'יין לבן', 'wine-white')">יין לבן</button>
+      </div>
 
-<br>
-<button onclick="saveFish()">אישור</button>
-</div>
+      <div class="back-row">
+        <button class="btn" onclick="saveFish()">יאללה מושלם</button>
+        <button class="secondary-btn" onclick="goToScreen('startScreen')">חזרה</button>
+      </div>
+    </div>
 
-<!-- סרט -->
-<div id="movieScreen" class="hidden">
-<h1>ידעתי שתבחרי סרט 🎬</h1>
+    <!-- עמוד בחירת סרט -->
+    <div id="movieScreen" class="hidden">
+      <div class="top-emoji">🎬</div>
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
+      <h1>ידעתי שתבחרי בסרט 🎬</h1>
+      <p class="subtitle">
+        כי מגיע לך ערב נעים, שמיכות, נשנושים ומשהו כיפי לראות יחד.
+      </p>
 
-<p>איזה סוג?</p>
-<select id="movieType">
-<option>ישראלי קלאסי</option>
-<option>קומדיה רומנטית</option>
-<option>מתח</option>
-</select>
+      <div class="section-label">איזה סוג סרט?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="movie-israeli" onclick="selectOption('movieType', 'סרט ישראלי קלאסי', 'movie-israeli')">סרט ישראלי קלאסי</button>
+        <button class="choice-pill" id="movie-romcom" onclick="selectOption('movieType', 'קומדיה רומנטית', 'movie-romcom')">קומדיה רומנטית</button>
+        <button class="choice-pill" id="movie-thriller" onclick="selectOption('movieType', 'סרט מתח', 'movie-thriller')">סרט מתח</button>
+      </div>
 
-<p>מה אוכלים?</p>
-<select id="snackType">
-<option>פופקורן</option>
-<option>נאצ׳וס</option>
-</select>
+      <div class="section-label">ומה אוכלים בצד?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="snack-popcorn" onclick="selectOption('snackType', 'פופקורן', 'snack-popcorn')">פופקורן</button>
+        <button class="choice-pill" id="snack-nachos" onclick="selectOption('snackType', 'נאצ׳וס', 'snack-nachos')">נאצ׳וס</button>
+      </div>
 
-<br>
-<button onclick="saveMovie()">אישור</button>
-</div>
+      <div class="back-row">
+        <button class="btn" onclick="saveMovie()">יאללה מושלם</button>
+        <button class="secondary-btn" onclick="goToScreen('startScreen')">חזרה</button>
+      </div>
+    </div>
 
-<!-- מסאז -->
-<div id="massageScreen" class="hidden">
-<h1>ידעתי שתבחרי מסאז׳ 😌</h1>
+    <!-- עמוד בחירת מסאז' -->
+    <div id="massageScreen" class="hidden">
+      <div class="top-emoji">💆</div>
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
+      <h1>ידעתי שתבחרי במסאז׳ 😌</h1>
+      <p class="subtitle">
+        כי לפעמים מה שהכי צריך זה פשוט צ׳יל ופינוקים.
+      </p>
 
-<p>עוצמה?</p>
-<select id="powerType">
-<option>עדין</option>
-<option>בינוני</option>
-<option>חזק</option>
-</select>
+      <div class="section-label">איזה סגנון בא לך?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="massage-soft" onclick="selectOption('massageStyle', 'עדין', 'massage-soft')">עדין</button>
+        <button class="choice-pill" id="massage-medium" onclick="selectOption('massageStyle', 'בינוני', 'massage-medium')">בינוני</button>
+        <button class="choice-pill" id="massage-strong" onclick="selectOption('massageStyle', 'חזק', 'massage-strong')">חזק</button>
+      </div>
 
-<p>אווירה?</p>
-<select id="soundType">
-<option>מוזיקה</option>
-<option>שקט</option>
-</select>
+      <div class="section-label">ואיזו אווירה?</div>
+      <div class="option-grid">
+        <button class="choice-pill" id="massage-music" onclick="selectOption('massageMood', 'מוזיקה', 'massage-music')">מוזיקה</button>
+        <button class="choice-pill" id="massage-silence" onclick="selectOption('massageMood', 'שקט', 'massage-silence')">שקט</button>
+      </div>
 
-<br>
-<button onclick="saveMassage()">אישור</button>
-</div>
+      <div class="back-row">
+        <button class="btn" onclick="saveMassage()">יאללה מושלם</button>
+        <button class="secondary-btn" onclick="goToScreen('startScreen')">חזרה</button>
+      </div>
+    </div>
 
-<!-- מסך סופי -->
-<div id="finalScreen" class="hidden">
+    <!-- מסך הפתעה -->
+    <div id="finalScreen" class="hidden">
+      <div class="top-emoji">✨</div>
 
-<h1>הבחירות שלך ❤️</h1>
+      <img
+        src="mika.jpeg"
+        class="main-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
 
-<p id="summary"></p>
+      <h1>הפתעה קטנה</h1>
+      <p id="chosenText"></p>
 
-<div class="cards">
-<div class="card" onclick="openFish()">🐟 לשנות דגים</div>
-<div class="card" onclick="openMovie()">🎬 לשנות סרט</div>
-<div class="card" onclick="openMassage()">💆 לשנות מסאז׳</div>
-</div>
+      <div class="reveal-box">
+        <p class="big-line">אבל האמת היא שמגיע לך הרבה יותר</p>
+        <p class="highlight-line">בשבת הקרובה את מקבלת את כל שלושת הדברים</p>
+      </div>
 
-<button onclick="restart()">להתחיל מהתחלה</button>
+      <div class="cards">
+        <div class="card" onclick="openGiftSetup('fish')">
+          <div class="emoji">🐟</div>
+          <h2>ארוחת דגים</h2>
+          <p>אני דואג להכל ונבשל יחד</p>
+        </div>
 
-</div>
+        <div class="card" onclick="openGiftSetup('movie')">
+          <div class="emoji">🎬</div>
+          <h2>ערב קולנוע</h2>
+          <p>שמיכות, נשנושים ואווירה</p>
+        </div>
 
-</div>
+        <div class="card" onclick="openGiftSetup('massage')">
+          <div class="emoji">💆</div>
+          <h2>מסאז׳ מפנק</h2>
+          <p>צ'יל ופינוקים עם מסאז׳יסט מקצועי שמכיר אותך טוב</p>
+        </div>
+      </div>
 
-<script>
+      <div id="selectionSummary" class="selection-summary"></div>
 
-let fish="",wine="",movie="",snack="",power="",sound="";
+      <div id="countdown" class="countdown"></div>
 
-function hideAll(){
-document.querySelectorAll(".container > div").forEach(e=>e.classList.add("hidden"));
-}
+      <div id="loveText" class="love-box"></div>
 
-function openFish(){hideAll();fishScreen.classList.remove("hidden")}
-function openMovie(){hideAll();movieScreen.classList.remove("hidden")}
-function openMassage(){hideAll();massageScreen.classList.remove("hidden")}
+      <div class="back-row">
+        <button class="btn" onclick="restartAll()">להתחיל מהתחלה</button>
+      </div>
+    </div>
+  </div>
 
-function saveFish(){
-fish=fishType.value;
-wine=wineType.value;
-showFinal();
-}
+  <script>
+    let typingStarted = false;
+    let firstRevealDone = false;
+    let lastChosenGiftTitle = "";
 
-function saveMovie(){
-movie=movieType.value;
-snack=snackType.value;
-showFinal();
-}
+    const state = {
+      fishType: "",
+      wineType: "",
+      movieType: "",
+      snackType: "",
+      massageStyle: "",
+      massageMood: ""
+    };
 
-function saveMassage(){
-power=powerType.value;
-sound=soundType.value;
-showFinal();
-}
+    const loveMessage =
+      "מיקה שלי,<br>תודה שאת מושלמת.<br>אני אוהב אותך ❤️";
 
-function showFinal(){
-hideAll();
-finalScreen.classList.remove("hidden");
+    function hideAllScreens() {
+      document.querySelectorAll(".container > div").forEach((screen) => {
+        screen.classList.add("hidden");
+      });
+    }
 
-summary.innerHTML=
-"🐟 דג: "+fish+" | יין: "+wine+"<br>"+
-"🎬 סרט: "+movie+" | נשנוש: "+snack+"<br>"+
-"💆 עוצמה: "+power+" | אווירה: "+sound;
-}
+    function goToScreen(screenId) {
+      hideAllScreens();
+      document.getElementById(screenId).classList.remove("hidden");
+      refreshSelectionsUI();
+    }
 
-function restart(){
-location.reload();
-}
+    function openGiftSetup(gift) {
+      if (gift === "fish") goToScreen("fishScreen");
+      if (gift === "movie") goToScreen("movieScreen");
+      if (gift === "massage") goToScreen("massageScreen");
+    }
 
-</script>
+    function selectOption(key, value, buttonId) {
+      state[key] = value;
 
+      const groupPrefixMap = {
+        fishType: "fish-",
+        wineType: "wine-",
+        movieType: "movie-",
+        snackType: "snack-",
+        massageStyle: "massage-",
+        massageMood: "massage-"
+      };
+
+      if (key === "massageStyle") {
+        ["massage-soft", "massage-medium", "massage-strong"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove("selected");
+        });
+      } else if (key === "massageMood") {
+        ["massage-music", "massage-silence"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove("selected");
+        });
+      } else {
+        const prefix = groupPrefixMap[key];
+        if (prefix) {
+          document.querySelectorAll(`[id^="${prefix}"]`).forEach((el) => {
+            if (
+              (key === "fishType" && ["fish-salmon", "fish-seabass", "fish-bream"].includes(el.id)) ||
+              (key === "wineType" && ["wine-red", "wine-white"].includes(el.id)) ||
+              (key === "movieType" && ["movie-israeli", "movie-romcom", "movie-thriller"].includes(el.id)) ||
+              (key === "snackType" && ["snack-popcorn", "snack-nachos"].includes(el.id))
+            ) {
+              el.classList.remove("selected");
+            }
+          });
+        }
+      }
+
+      const selectedBtn = document.getElementById(buttonId);
+      if (selectedBtn) selectedBtn.classList.add("selected");
+    }
+
+    function saveFish() {
+      if (!state.fishType || !state.wineType) {
+        alert("רק תבחרי דג ויין ואז נמשיך 😌");
+        return;
+      }
+      lastChosenGiftTitle = "ארוחת דגים";
+      showFinal();
+    }
+
+    function saveMovie() {
+      if (!state.movieType || !state.snackType) {
+        alert("רק תבחרי סוג סרט ונשנוש ואז נמשיך 😌");
+        return;
+      }
+      lastChosenGiftTitle = "ערב קולנוע";
+      showFinal();
+    }
+
+    function saveMassage() {
+      if (!state.massageStyle || !state.massageMood) {
+        alert("רק תבחרי סגנון ואווירה ואז נמשיך 😌");
+        return;
+      }
+      lastChosenGiftTitle = "מסאז׳ מפנק";
+      showFinal();
+    }
+
+    function showFinal() {
+      hideAllScreens();
+      document.getElementById("finalScreen").classList.remove("hidden");
+
+      document.getElementById("chosenText").innerHTML =
+        "נכון שבחרת <b style='color:#e11d48'>" + lastChosenGiftTitle + "</b>...";
+
+      renderSelectionSummary();
+
+      if (!firstRevealDone) {
+        hearts();
+        firstRevealDone = true;
+      }
+
+      if (!typingStarted) {
+        typingStarted = true;
+        typeText();
+      }
+    }
+
+    function renderSelectionSummary() {
+      const box = document.getElementById("selectionSummary");
+      let html = "";
+
+      if (state.fishType && state.wineType) {
+        html += `
+          <div class="selection-item">
+            <strong>🐟 ארוחת דגים</strong>
+            <div>דג: ${state.fishType} | שתייה: ${state.wineType}</div>
+          </div>
+        `;
+      }
+
+      if (state.movieType && state.snackType) {
+        html += `
+          <div class="selection-item">
+            <strong>🎬 ערב קולנוע</strong>
+            <div>סוג סרט: ${state.movieType} | נשנוש: ${state.snackType}</div>
+          </div>
+        `;
+      }
+
+      if (state.massageStyle && state.massageMood) {
+        html += `
+          <div class="selection-item">
+            <strong>💆 מסאז׳ מפנק</strong>
+            <div>סגנון: ${state.massageStyle} | אווירה: ${state.massageMood}</div>
+          </div>
+        `;
+      }
+
+      box.innerHTML = html;
+    }
+
+    function refreshSelectionsUI() {
+      const selectedIds = {
+        fishType: {
+          "סלמון": "fish-salmon",
+          "לברק": "fish-seabass",
+          "דניס": "fish-bream"
+        },
+        wineType: {
+          "יין אדום": "wine-red",
+          "יין לבן": "wine-white"
+        },
+        movieType: {
+          "סרט ישראלי קלאסי": "movie-israeli",
+          "קומדיה רומנטית": "movie-romcom",
+          "סרט מתח": "movie-thriller"
+        },
+        snackType: {
+          "פופקורן": "snack-popcorn",
+          "נאצ׳וס": "snack-nachos"
+        },
+        massageStyle: {
+          "עדין": "massage-soft",
+          "בינוני": "massage-medium",
+          "חזק": "massage-strong"
+        },
+        massageMood: {
+          "מוזיקה": "massage-music",
+          "שקט": "massage-silence"
+        }
+      };
+
+      document.querySelectorAll(".choice-pill").forEach(btn => btn.classList.remove("selected"));
+
+      Object.keys(selectedIds).forEach((key) => {
+        const value = state[key];
+        if (value && selectedIds[key][value]) {
+          const el = document.getElementById(selectedIds[key][value]);
+          if (el) el.classList.add("selected");
+        }
+      });
+    }
+
+    function typeText() {
+      const element = document.getElementById("loveText");
+      let i = 0;
+      const temp = document.createElement("div");
+      temp.innerHTML = loveMessage;
+      const plainText = temp.innerText;
+
+      function step() {
+        if (i <= plainText.length) {
+          const current = plainText.slice(0, i).replace(/\n/g, "<br>");
+          element.innerHTML = current;
+          i++;
+          setTimeout(step, 35);
+        } else {
+          element.innerHTML = loveMessage;
+        }
+      }
+
+      step();
+    }
+
+    function hearts() {
+      for (let i = 0; i < 22; i++) {
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.innerHTML = Math.random() > 0.5 ? "💖" : "✨";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = 18 + Math.random() * 18 + "px";
+        heart.style.animationDuration = 1.8 + Math.random() * 1.6 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3500);
+      }
+    }
+
+    function showSecretMessage() {
+      alert("שרוף עלייך❤️");
+    }
+
+    function getNextSaturdayAt1900() {
+      const now = new Date();
+      const target = new Date(now);
+      const day = now.getDay();
+      let daysUntilSaturday = (6 - day + 7) % 7;
+
+      if (daysUntilSaturday === 0 && now.getHours() >= 19) {
+        daysUntilSaturday = 7;
+      }
+
+      target.setDate(now.getDate() + daysUntilSaturday);
+      target.setHours(19, 0, 0, 0);
+      return target;
+    }
+
+    function updateCountdown() {
+      const target = getNextSaturdayAt1900();
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        document.getElementById("countdown").innerHTML = "זה כבר היום ❤️";
+        return;
+      }
+
+      const totalMinutes = Math.floor(diff / (1000 * 60));
+      const days = Math.floor(totalMinutes / (60 * 24));
+      const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+      const minutes = totalMinutes % 60;
+
+      let text = "עד השבת שלנו: ";
+      if (days > 0) {
+        text += days + " ימים, ";
+      }
+      text += hours + " שעות ו-" + minutes + " דקות ❤️";
+
+      document.getElementById("countdown").innerHTML = text;
+    }
+
+    function restartAll() {
+      state.fishType = "";
+      state.wineType = "";
+      state.movieType = "";
+      state.snackType = "";
+      state.massageStyle = "";
+      state.massageMood = "";
+      lastChosenGiftTitle = "";
+      firstRevealDone = false;
+      goToScreen("startScreen");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 30);
+  </script>
 </body>
 </html>
