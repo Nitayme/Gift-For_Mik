@@ -261,6 +261,56 @@
       text-align: right;
     }
 
+    .invite-card {
+      background: linear-gradient(180deg, #fffafc 0%, #fff1f2 100%);
+      border: 1px solid #fbcfe8;
+      border-radius: 24px;
+      padding: 28px 22px;
+      margin-top: 26px;
+      text-align: right;
+      box-shadow: 0 10px 24px rgba(190, 24, 93, 0.08);
+    }
+
+    .invite-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .invite-title {
+      color: #be185d;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .invite-subtitle {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+
+    .invite-section {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid #fbcfe8;
+      border-radius: 18px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .invite-section strong {
+      display: block;
+      color: #9d174d;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .invite-footer {
+      text-align: center;
+      margin-top: 22px;
+      color: #9d174d;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
     @keyframes floatUp {
       from {
         transform: translateY(0) scale(1);
@@ -280,6 +330,40 @@
       to {
         transform: scale(1);
         opacity: 1;
+      }
+    }
+
+    @media print {
+      body {
+        background: white !important;
+        padding: 0;
+      }
+
+      .container > div:not(#inviteScreen) {
+        display: none !important;
+      }
+
+      #inviteScreen {
+        display: block !important;
+      }
+
+      .back-row,
+      .main-photo:not(.invite-photo) {
+        display: none !important;
+      }
+
+      .container {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+        background: white;
+      }
+
+      .invite-card {
+        box-shadow: none;
+        border: 1px solid #eee;
       }
     }
 
@@ -307,6 +391,10 @@
 
       .highlight-line {
         font-size: 1.45rem;
+      }
+
+      .invite-title {
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -490,6 +578,10 @@
 
       <div id="selectionSummary" class="selection-summary"></div>
 
+      <div id="inviteButtonWrap" class="back-row hidden">
+        <button class="btn" onclick="openInviteScreen()">ליצור דף הזמנה</button>
+      </div>
+
       <div id="countdown" class="countdown"></div>
 
       <div id="loveText" class="love-box"></div>
@@ -498,8 +590,59 @@
         <button class="btn" onclick="restartAll()">להתחיל מהתחלה</button>
       </div>
     </div>
+
+    <!-- דף הזמנה -->
+    <div id="inviteScreen" class="hidden">
+      <div class="top-emoji">💌</div>
+
+      <img
+        src="mika.jpeg"
+        class="main-photo invite-photo"
+        alt="מיקה"
+        onclick="showSecretMessage()"
+      />
+
+      <h1>דף ההזמנה שלך</h1>
+      <p class="subtitle">
+        כל מה שמחכה לך בשבת הקרובה, בדיוק כמו שבחרת ❤️
+      </p>
+
+      <div id="inviteCard" class="invite-card">
+        <div class="invite-header">
+          <div class="invite-title">הזמנה לשבת שלנו</div>
+          <div class="invite-subtitle">למיקה — באהבה גדולה</div>
+        </div>
+
+        <div class="invite-section">
+          <strong>🐟 ארוחת דגים</strong>
+          <div id="inviteFish"></div>
+        </div>
+
+        <div class="invite-section">
+          <strong>🎬 ערב קולנוע</strong>
+          <div id="inviteMovie"></div>
+        </div>
+
+        <div class="invite-section">
+          <strong>💆 מסאז׳ מפנק</strong>
+          <div id="inviteMassage"></div>
+        </div>
+
+        <div class="invite-footer">
+          בשבת הקרובה את מקבלת את כל שלושת הדברים ✨<br />
+          שרוף עלייך❤️
+        </div>
+      </div>
+
+      <div class="back-row">
+        <button class="btn" onclick="printInvite()">להדפיס</button>
+        <button class="btn" onclick="downloadInviteAsImage()">להוריד כתמונה</button>
+        <button class="secondary-btn" onclick="goToScreen('finalScreen')">חזרה</button>
+      </div>
+    </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     let typingStarted = false;
     let firstRevealDone = false;
@@ -527,6 +670,7 @@
       hideAllScreens();
       document.getElementById(screenId).classList.remove("hidden");
       refreshSelectionsUI();
+      updateInviteButtonVisibility();
     }
 
     function openGiftSetup(gift) {
@@ -538,40 +682,19 @@
     function selectOption(key, value, buttonId) {
       state[key] = value;
 
-      const groupPrefixMap = {
-        fishType: "fish-",
-        wineType: "wine-",
-        movieType: "movie-",
-        snackType: "snack-",
-        massageStyle: "massage-",
-        massageMood: "massage-"
+      const groups = {
+        fishType: ["fish-salmon", "fish-seabass", "fish-bream"],
+        wineType: ["wine-red", "wine-white"],
+        movieType: ["movie-israeli", "movie-romcom", "movie-thriller"],
+        snackType: ["snack-popcorn", "snack-nachos"],
+        massageStyle: ["massage-soft", "massage-medium", "massage-strong"],
+        massageMood: ["massage-music", "massage-silence"]
       };
 
-      if (key === "massageStyle") {
-        ["massage-soft", "massage-medium", "massage-strong"].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.classList.remove("selected");
-        });
-      } else if (key === "massageMood") {
-        ["massage-music", "massage-silence"].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.classList.remove("selected");
-        });
-      } else {
-        const prefix = groupPrefixMap[key];
-        if (prefix) {
-          document.querySelectorAll(`[id^="${prefix}"]`).forEach((el) => {
-            if (
-              (key === "fishType" && ["fish-salmon", "fish-seabass", "fish-bream"].includes(el.id)) ||
-              (key === "wineType" && ["wine-red", "wine-white"].includes(el.id)) ||
-              (key === "movieType" && ["movie-israeli", "movie-romcom", "movie-thriller"].includes(el.id)) ||
-              (key === "snackType" && ["snack-popcorn", "snack-nachos"].includes(el.id))
-            ) {
-              el.classList.remove("selected");
-            }
-          });
-        }
-      }
+      (groups[key] || []).forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("selected");
+      });
 
       const selectedBtn = document.getElementById(buttonId);
       if (selectedBtn) selectedBtn.classList.add("selected");
@@ -612,6 +735,7 @@
         "נכון שבחרת <b style='color:#e11d48'>" + lastChosenGiftTitle + "</b>...";
 
       renderSelectionSummary();
+      updateInviteButtonVisibility();
 
       if (!firstRevealDone) {
         hearts();
@@ -656,6 +780,28 @@
       }
 
       box.innerHTML = html;
+    }
+
+    function allChoicesCompleted() {
+      return (
+        state.fishType &&
+        state.wineType &&
+        state.movieType &&
+        state.snackType &&
+        state.massageStyle &&
+        state.massageMood
+      );
+    }
+
+    function updateInviteButtonVisibility() {
+      const wrap = document.getElementById("inviteButtonWrap");
+      if (!wrap) return;
+
+      if (allChoicesCompleted()) {
+        wrap.classList.remove("hidden");
+      } else {
+        wrap.classList.add("hidden");
+      }
     }
 
     function refreshSelectionsUI() {
@@ -780,6 +926,40 @@
       document.getElementById("countdown").innerHTML = text;
     }
 
+    function openInviteScreen() {
+      if (!allChoicesCompleted()) return;
+
+      document.getElementById("inviteFish").innerHTML =
+        `דג: ${state.fishType}<br>יין: ${state.wineType}`;
+
+      document.getElementById("inviteMovie").innerHTML =
+        `סוג סרט: ${state.movieType}<br>נשנוש: ${state.snackType}`;
+
+      document.getElementById("inviteMassage").innerHTML =
+        `סגנון: ${state.massageStyle}<br>אווירה: ${state.massageMood}`;
+
+      goToScreen("inviteScreen");
+    }
+
+    function printInvite() {
+      window.print();
+    }
+
+    function downloadInviteAsImage() {
+      const card = document.getElementById("inviteCard");
+
+      html2canvas(card, {
+        scale: 2,
+        backgroundColor: null,
+        useCORS: true
+      }).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "mika-invite.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
     function restartAll() {
       state.fishType = "";
       state.wineType = "";
@@ -789,6 +969,9 @@
       state.massageMood = "";
       lastChosenGiftTitle = "";
       firstRevealDone = false;
+      typingStarted = false;
+
+      document.getElementById("loveText").innerHTML = "";
       goToScreen("startScreen");
     }
 
